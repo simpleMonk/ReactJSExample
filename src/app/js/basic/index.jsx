@@ -1,10 +1,44 @@
 import React from 'react';
+import MyActions from '../actions/MyActions';
+import MyStore from '../store/MyStore';
 
-var HelloWorld=React.createClass({
-  render(){
-    return <div>Hello World from REACT!</div>
+var HelloWorld = React.createClass({
+
+  getInitialState() {
+    return getMyStore();
+  },
+  componentDidMount() {
+    MyStore.listen(this._onChange);
+  },
+
+  componentWillUnmount() {
+    MyStore.unlisten(this._onChange);
+  },
+  render() {
+    var thisMessage =[];
+    for (var message in this.state.messages) {
+      thisMessage.push(<div key={message.id}>{this.state.messages[message]}</div>);
+    }
+
+    return <div onClick={this._onClick}>
+      Hello World from React-1
+      <hr/>
+      {thisMessage}
+    </div>
+  },
+  _onClick() {
+    MyActions.postMessage("Message-" + Math.floor(Math.random() * 11));
+  },
+  _onChange: function (state) {
+    this.setState(state);
   }
+
 });
 
+var getMyStore = function () {
+  return {
+    messages: MyStore.getState().messages
+  }
+};
 
-React.render(<HelloWorld/>,document.getElementById('container'));
+React.render(<HelloWorld/>, document.getElementById('container'));
