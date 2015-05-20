@@ -1,4 +1,4 @@
-# mithrill-dev-template
+# ReactJS
 ReactJS JS development template
 
 -npm install
