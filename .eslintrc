@@ -1,0 +1,30 @@
+{
+    "ecmaFeatures": {
+        "blockBindings": true,
+        "forOf": true,
+        "jsx": true
+    },
+    "rules": {
+        "semi": 2,
+        "eol-last":false,
+        "no-underscore-dangle":false,
+        "curly": false
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "globals": {
+      "describe": false,
+      "it": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "inject": false,
+      "ddescribe": false,
+      "iit": false,
+      "m": false,
+      "$": false,
+      "chai": false,
+      "React": false
+    }
+}

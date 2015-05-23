@@ -1,3 +1,4 @@
+"use strict"
 var alt = require('../alt');
 var MyActions = require('../actions/MyActions');
 

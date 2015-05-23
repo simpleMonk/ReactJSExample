@@ -7,6 +7,7 @@ var connect = require('gulp-connect');
 var concat = require('gulp-concat');
 var concatcss = require('gulp-concat-css');
 var jshint = require('gulp-jshint');
+var eslint = require('gulp-eslint');
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
 var gzip = require('gulp-gzip');
@@ -43,14 +44,15 @@ gulp.task('copy-js-files', ['lint-js-files'], function () {
 	})
 		.transform(babelify)
 		.bundle()
+		.on('error', function (err) {
+			gutil.log(err.message);
+			this.emit('end');
+		})
 		.pipe(source('bundle.js'))
 		.pipe(gulp.dest(config.development))
 		.pipe(connect.reload())
 		.on('end', function () {
 			gutil.log('successfully copied js files');
-		})
-		.on('error', function (err) {
-			gutil.log(err);
 		});
 });
 
@@ -68,14 +70,15 @@ gulp.task('copy-spec-files', ['lint-spec-files', 'copy-fixtures'], function () {
 		})
 			.transform(babelify)
 			.bundle()
+			.on('error', function (err) {
+				gutil.log(err.message);
+				this.emit('end');
+			})
 			.pipe(source('spec.js'))
 			.pipe(gulp.dest(config.development + "/spec"))
 			.pipe(connect.reload())
 			.on('end', function () {
 				gutil.log('successfully copied spec files');
-			})
-			.on('error', function (err) {
-				gutil.log(err);
 			});
 	};
 
@@ -83,10 +86,10 @@ gulp.task('copy-spec-files', ['lint-spec-files', 'copy-fixtures'], function () {
 });
 
 gulp.task('lint-js-files', function () {
-	gulp.src(config.src + "/app/**/*.{js,jsx}")
+	gulp.src(config.src + "/app/js/**/*.{js,jsx}")
 		.pipe(babel())
-		.pipe(jshint())
-		.pipe(jshint.reporter('jshint-stylish'));
+		.pipe(eslint())
+		.pipe(eslint.format());
 
 });
 

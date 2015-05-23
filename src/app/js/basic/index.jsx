@@ -1,6 +1,13 @@
+"use strict"
 import React from 'react';
 import MyActions from '../actions/MyActions';
 import MyStore from '../store/MyStore';
+
+var getMyStore = function () {
+  return {
+    messages: MyStore.getState().messages
+  }
+};
 
 var HelloWorld = React.createClass({
 
@@ -16,6 +23,7 @@ var HelloWorld = React.createClass({
   },
   render() {
     var thisMessage =[];
+
     for (var message in this.state.messages) {
       thisMessage.push(<div key={message.id}>{this.state.messages[message]}</div>);
     }
@@ -35,10 +43,6 @@ var HelloWorld = React.createClass({
 
 });
 
-var getMyStore = function () {
-  return {
-    messages: MyStore.getState().messages
-  }
-};
+
 
 React.render(<HelloWorld/>, document.getElementById('container'));
