@@ -29,7 +29,7 @@ var HelloWorld = React.createClass({
     }
 
     return <div onClick={this._onClick}>
-      Hello World from React-1
+      Hello World from React!!!!
       <hr/>
       {thisMessage}
     </div>

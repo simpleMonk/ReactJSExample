@@ -1,6 +1,6 @@
 "use strict"
 
-var alt = require('../alt');
+import alt from '../alt';
 
 class MyActions {
   constructor() {
@@ -8,4 +8,4 @@ class MyActions {
   }
 }
 
-module.exports = alt.createActions(MyActions);
+export default alt.createActions(MyActions);
