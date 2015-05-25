@@ -88,6 +88,10 @@ gulp.task('copy-spec-files', ['lint-spec-files', 'copy-fixtures'], function () {
 gulp.task('lint-js-files', function () {
 	gulp.src(config.src + "/app/js/**/*.{js,jsx}")
 		.pipe(babel())
+		.on('error', function (err) {
+			gutil.log(err.message);
+			this.emit('end');
+		})
 		.pipe(eslint())
 		.pipe(eslint.format());
 
@@ -101,6 +105,10 @@ gulp.task('lint-spec-files', function () {
 
 	gulp.src(lintSpecFiles)
 		.pipe(babel())
+		.on('error', function (err) {
+			gutil.log(err.message);
+			this.emit('end');
+		})
 		.pipe(eslint())
 		.pipe(eslint.format());
 
