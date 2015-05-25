@@ -2,13 +2,15 @@
     "ecmaFeatures": {
         "blockBindings": true,
         "forOf": true,
-        "jsx": true
+        "jsx": true,
+        "modules": true,
     },
     "rules": {
         "semi": 2,
         "eol-last":false,
         "no-underscore-dangle":false,
-        "curly": false
+        "curly": false,
+        "dot-notation": [2, {"allowKeywords": false,"allowPattern": "" }]
     },
     "env": {
         "browser": true,
@@ -25,6 +27,7 @@
       "m": false,
       "$": false,
       "chai": false,
-      "React": false
+      "React": false,
+      "import": false
     }
 }

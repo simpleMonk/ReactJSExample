@@ -101,8 +101,8 @@ gulp.task('lint-spec-files', function () {
 
 	gulp.src(lintSpecFiles)
 		.pipe(babel())
-		.pipe(jshint())
-		.pipe(jshint.reporter('jshint-stylish'));
+		.pipe(eslint())
+		.pipe(eslint.format());
 
 });
 
