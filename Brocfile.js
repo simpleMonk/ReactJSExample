@@ -1,4 +1,3 @@
-
 var esTranspiler = require('broccoli-babel-transpiler');
 var pickFiles = require('broccoli-static-compiler');
 var merge = require('broccoli-merge-trees');
@@ -6,26 +5,26 @@ var browserify = require('broccoli-browserify');
 var compileSass = require('broccoli-sass');
 var concat = require('broccoli-concat');
 var fastBrowserify = require('broccoli-fast-browserify');
-var injectLivereload = require('broccoli-inject-livereload');
+var eslint = require('broccoli-lint-eslint');
+var broccoliTestem = require('broccoli-testem-plugin')
 
 var path = {
-  source_base:'./src/app',
-  source_js:'./src/app/js',
-  source_style:'./src/app/style',
-  spec:'./spec',
-  vendor_js:'./src/vendor/js',
-  vendor_style:'./src/vendor/style',
-  dev_base:'/',
-  dev_spec:'/spec',
-}
+	source_base: './src/app',
+	source_js: './src/app/js',
+	source_style: './src/app/style',
+	spec: './spec',
+	vendor_js: './src/vendor/js',
+	vendor_style: './src/vendor/style',
+	dev_base: '/',
+	dev_spec: '/spec'
+};
 
 
-var scripts = esTranspiler(path.source_js,{
-  filterExtensions:['js', 'es6','jsx']
+var scripts = esTranspiler(path.source_js, {
+	filterExtensions: ['js', 'es6', 'jsx']
 });
 
-var entryFile= 'basic/index.js';
-
+var entryFile = 'basic/index.js';
 scripts = fastBrowserify(scripts, {
 
 	bundles: {
@@ -40,9 +39,14 @@ scripts = fastBrowserify(scripts, {
 });
 
 
-var spec =merge([path.source_js,path.spec])
-spec= esTranspiler(spec,{
-  filterExtensions:['js', 'es6','jsx']
+var spec = merge([path.source_js, path.spec])
+spec = esTranspiler(spec, {
+	filterExtensions: ['js', 'es6', 'jsx']
+});
+
+var runTests = broccoliTestem(path.spec, {
+	src_files: [path.source_js] // Files paths are relative to input tree
+	// Here any testem options
 });
 
 spec = fastBrowserify(spec, {
@@ -57,26 +61,21 @@ spec = fastBrowserify(spec, {
 
 });
 
-var public = injectLivereload(path.source_base, {
-  port: 12345
-});
-
 var html = pickFiles(path.source_base, {
-  srcDir: '/',
-  files: ['index.html'],
-  destDir: path.dev_base
+	srcDir: '/',
+	files: ['index.html'],
+	destDir: path.dev_base
 });
 
 var appStyles = compileSass([path.source_style], 'app.scss', 'app.css');
 
 var vendorStyle = concat(path.vendor_style, {
-  inputFiles: [
-    '*.css'
-  ],
-  outputFile: '/vendor.css',
-  separator: '\n', // (optional, defaults to \n)
+	inputFiles: [
+		'*.css'
+	],
+	outputFile: '/vendor.css',
+	separator: '\n' // (optional, defaults to \n)
 });
 
 
-
-module.exports = merge([html,scripts,spec,appStyles,vendorStyle]);
+module.exports = merge([html,scripts, spec, appStyles, vendorStyle,runTests]);

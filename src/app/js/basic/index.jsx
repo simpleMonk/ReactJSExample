@@ -1,48 +1,41 @@
 "use strict"
 import React from 'react';
-import MyActions from '../actions/MyActions';
-import MyStore from '../store/MyStore';
+import TodoActions from '../actions/TodoActions';
+import TodoStore from '../store/TodoStore';
 
-var getMyStore = function () {
-  return {
-    messages: MyStore.getState().messages
-  }
-};
-
-var HelloWorld = React.createClass({
-
+var TodoContainer = React.createClass({
   getInitialState() {
-    return getMyStore();
+    return TodoStore.getState();
   },
   componentDidMount() {
-    MyStore.listen(this._onChange);
+    TodoStore.listen(this._onChange);
   },
-
   componentWillUnmount() {
-    MyStore.unlisten(this._onChange);
+    TodoStore.listen(this._onChange);
   },
   render() {
-    var thisMessage =[];
+    var todos = this.state.todos.map(function (todo) {
+      return <div key={todo.id} onClick={this._deleteTodo.bind(this,todo.id)}>{todo.title}</div>;
+    }.bind(this));
 
-    for (var message in this.state.messages) {
-      thisMessage.push(<div key={message.id}>{this.state.messages[message]}</div>);
-    }
-
-    return <div onClick={this._onClick}>
-      Hello World from React!!!!
-      <hr/>
-      {thisMessage}
-    </div>
+    return (
+      <div>Todos:
+        <button onClick={this._addTodo}>Add Todo</button>
+        <hr></hr>
+          {{todos}}
+      </div>
+    );
   },
-  _onClick() {
-    MyActions.postMessage("Message-" + Math.floor(Math.random() * 11));
-  },
-  _onChange: function (state) {
+  _onChange(state) {
     this.setState(state);
+  },
+  _addTodo() {
+    TodoActions.addTodo("Todo--" + Math.floor(Math.random() * 11));
+  },
+  _deleteTodo(id,event, key) {
+    TodoActions.deleteTodo(id);
   }
 
 });
 
-
-
-React.render(<HelloWorld/>, document.getElementById('container'));
+React.render(<TodoContainer/>, document.getElementById('container'));
