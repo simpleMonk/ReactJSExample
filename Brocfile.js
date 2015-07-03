@@ -6,7 +6,8 @@ var compileSass = require('broccoli-sass');
 var concat = require('broccoli-concat');
 var fastBrowserify = require('broccoli-fast-browserify');
 var eslint = require('broccoli-lint-eslint');
-var broccoliTestem = require('broccoli-testem-plugin')
+var broccoliTestem = require('broccoli-testem-plugin');
+var reload = require('./reload.js');
 
 var path = {
 	source_base: './src/app',
@@ -77,5 +78,7 @@ var vendorStyle = concat(path.vendor_style, {
 	separator: '\n' // (optional, defaults to \n)
 });
 
+var reloadFiles = reload(['src']);
 
-module.exports = merge([html,scripts, spec, appStyles, vendorStyle,runTests]);
+
+module.exports = merge([html, scripts, spec, appStyles, vendorStyle,reloadFiles]);
