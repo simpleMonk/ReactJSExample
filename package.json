@@ -6,7 +6,12 @@
   "scripts": {
     "test": "testem",
     "start-selenium": "start-selenium",
-    "run-e2e": "./node_modules/.bin/nightwatch"
+    "run-e2e": "./node_modules/.bin/nightwatch",
+    "server": "npm run build-dev & npm run server-reload & node watcher.js ",
+    "dist": "broccoli build dist",
+    "build-dev": "broccoli-timepiece development",
+    "server-reload": "browser-sync start --files 'development/**/*.*'  --server development",
+    "eslint": "node watcher.js"
   },
   "keywords": [
     "React",
@@ -16,6 +21,7 @@
   "license": "MIT",
   "devDependencies": {
     "alt": "^0.16.5",
+    "babel-eslint": "^3.1.20",
     "babelify": "^5.0.5",
     "broccoli": "^0.16.3",
     "broccoli-babel-transpiler": "^5.0.0",
@@ -34,8 +40,10 @@
     "chalk": "^1.1.0",
     "chokidar": "^0.12.6",
     "del": "^1.1.1",
+    "eslint": "^0.24.0",
+    "eslint-watch": "^1.2.4",
     "flux": "^2.0.1",
-    "glob": "^4.5.3",
+    "glob": "^5.0.13",
     "gulp": "^3.8.10",
     "gulp-babel": "^4.0.0",
     "gulp-concat": "^2.4.2",

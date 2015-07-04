@@ -5,7 +5,7 @@
 	],
 	"launchers": {
 		"node": {
-			"command": "./node_modules/.bin/mocha -r spec/config/setup.js -R tap development/spec/*.js",
+			"command": "./node_modules/.bin/mocha -r spec/config/setup.js -R tap dist/spec/*.js",
 			"protocol": "tap"
 		}
 	},

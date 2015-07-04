@@ -1,10 +1,10 @@
-"use strict"
+"use strict";
 
-import alt from '../alt';
+import alt from "../alt";
 
 class MyActions {
   constructor() {
-    this.generateActions('postMessage');
+    this.generateActions("postMessage");
   }
 }
 

@@ -5,9 +5,6 @@ var browserify = require('broccoli-browserify');
 var compileSass = require('broccoli-sass');
 var concat = require('broccoli-concat');
 var fastBrowserify = require('broccoli-fast-browserify');
-var eslint = require('broccoli-lint-eslint');
-var broccoliTestem = require('broccoli-testem-plugin');
-var reload = require('./reload.js');
 
 var path = {
 	source_base: './src/app',
@@ -24,43 +21,15 @@ var path = {
 var scripts = esTranspiler(path.source_js, {
 	filterExtensions: ['js', 'es6', 'jsx']
 });
-
-var entryFile = 'basic/index.js';
-scripts = fastBrowserify(scripts, {
-
-	bundles: {
-		'bundle.js': {
-			entryPoints: [entryFile]
-		}
-	},
-	browserify: {
-		debug: true
-	}
-
-});
+scripts = getfastBrowserify(scripts, 'bundle.js', 'basic/index.js', false);
 
 
-var spec = merge([path.source_js, path.spec])
+var spec = merge([path.source_js, path.spec]);
 spec = esTranspiler(spec, {
 	filterExtensions: ['js', 'es6', 'jsx']
 });
 
-var runTests = broccoliTestem(path.spec, {
-	src_files: [path.source_js] // Files paths are relative to input tree
-	// Here any testem options
-});
-
-spec = fastBrowserify(spec, {
-	bundles: {
-		'spec/spec.js': {
-			entryPoints: ['basic.spec.js']
-		}
-	},
-	browserify: {
-		debug: true
-	}
-
-});
+spec = getfastBrowserify(spec, 'spec/spec.js', 'basic.spec.js', false);
 
 var html = pickFiles(path.source_base, {
 	srcDir: '/',
@@ -78,7 +47,19 @@ var vendorStyle = concat(path.vendor_style, {
 	separator: '\n' // (optional, defaults to \n)
 });
 
-var reloadFiles = reload(['src']);
+function getfastBrowserify(files, bundleFileName, entryFile, debug) {
+	var bundleFile = {};
+	bundleFile[bundleFileName] = {
+		entryPoints: [entryFile]
+	};
 
+	return fastBrowserify(files, {
+		bundles: bundleFile,
+		browserify: {
+			debug: debug
+		}
 
-module.exports = merge([html, scripts, spec, appStyles, vendorStyle,reloadFiles]);
+	});
+}
+
+module.exports = merge([html, scripts, spec, appStyles, vendorStyle]);
