@@ -5,6 +5,9 @@ var browserify = require('broccoli-browserify');
 var compileSass = require('broccoli-sass');
 var concat = require('broccoli-concat');
 var fastBrowserify = require('broccoli-fast-browserify');
+var autoprefixer = require('broccoli-autoprefixer');
+var cleanCSS = require('broccoli-clean-css');
+
 
 var path = {
 	source_base: './src/app',
@@ -28,7 +31,6 @@ var spec = merge([path.source_js, path.spec]);
 spec = esTranspiler(spec, {
 	filterExtensions: ['js', 'es6', 'jsx']
 });
-
 spec = getfastBrowserify(spec, 'spec/spec.js', 'basic.spec.js', false);
 
 var html = pickFiles(path.source_base, {
@@ -38,6 +40,8 @@ var html = pickFiles(path.source_base, {
 });
 
 var appStyles = compileSass([path.source_style], 'app.scss', 'app.css');
+appStyles = autoprefixer(appStyles, {});
+appStyles = cleanCSS(appStyles);
 
 var vendorStyle = concat(path.vendor_style, {
 	inputFiles: [
