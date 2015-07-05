@@ -1,33 +1,39 @@
 {
-    "ecmaFeatures": {
-        "blockBindings": true,
-        "forOf": true,
-        "jsx": true,
-        "modules": true,
-    },
-    "rules": {
-        "semi": 2,
-        "eol-last":false,
-        "no-underscore-dangle":false,
-        "curly": false,
-        "dot-notation": [2, {"allowKeywords": false,"allowPattern": "" }]
-    },
-    "env": {
-        "browser": true,
-        "node": true
-    },
-    "globals": {
-      "describe": false,
-      "it": false,
-      "beforeEach": false,
-      "afterEach": false,
-      "inject": false,
-      "ddescribe": false,
-      "iit": false,
-      "m": false,
-      "$": false,
-      "chai": false,
-      "React": false,
-      "import": false
-    }
+  "ecmaFeatures": {
+    "blockBindings": true,
+    "forOf": true,
+    "jsx": true,
+    "modules": true
+  },
+  "rules": {
+    "semi": 2,
+    "eol-last": 0,
+    "no-underscore-dangle": 0,
+    "curly": 0,
+    "no-proto":0,
+    "dot-notation": [
+      2,
+      {
+        "allowKeywords": false,
+        "allowPattern": ""
+      }
+    ]
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "describe": false,
+    "it": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "inject": false,
+    "ddescribe": false,
+    "iit": false,
+    "$": false,
+    "chai": false,
+    "React": false,
+    "import": false
+  }
 }

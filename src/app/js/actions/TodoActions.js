@@ -1,11 +1,11 @@
 "use strict";
 
-import alt from '../alt';
+import alt from "../alt";
 
 class TodoActions {
-  constructor() {
-    this.generateActions('addTodo','updateTodo','deleteTodo');
-  }
+	constructor() {
+		this.generateActions("addTodo", "deleteTodo");
+	}
 }
 
 export default alt.createActions(TodoActions);
