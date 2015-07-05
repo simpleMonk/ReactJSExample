@@ -1,8 +1,8 @@
 "use strict";
 import React from "react";
-import TodoContainer from "./components/TodoContainer";
+import HomePage from "./containers/HomePageContainer";
 
-React.render(<TodoContainer/>, document.getElementById("container"));
+React.render(<HomePage/>, document.getElementById("container"));
 
 
 

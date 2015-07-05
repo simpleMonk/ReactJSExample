@@ -31,7 +31,6 @@ export default class TodoContainer extends React.Component {
 	}
 
 	onChange(state) {
-		console.log(this, TodoStore, state);
 		this.setState(state);
 	}
 
